@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx --yes create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --no-turbopack)",
+      "Bash(npx shadcn@latest init -y -d)",
+      "Bash(npx shadcn@latest add button badge card dialog drawer input label select sheet table tabs toast separator skeleton)",
+      "Bash(npx shadcn@latest add sonner)",
+      "Bash(npm install *)",
+      "Bash(npx shadcn@latest add avatar -y)",
+      "Bash(npm run *)",
+      "Bash(curl -sf http://localhost:3000)",
+      "Bash(kill %1)",
+      "Bash(npx shadcn@latest add skeleton -y)"
+    ],
+    "additionalDirectories": [
+      "/home/niloticking/Desktop/wayyo-insurance",
+      "/home/niloticking/Desktop/wayyo-insurance/frontend/app/api/claims"
+    ]
+  }
+}
