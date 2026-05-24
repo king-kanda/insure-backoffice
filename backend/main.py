@@ -414,31 +414,20 @@ def update_claim_status(
 
 @app.post("/api/claims/submit")
 async def submit_claim(
-    policy_number:   str        = Form(...),
-    description:     str        = Form(""),
-    amount:          float      = Form(0),
-    police_abstract: UploadFile = File(...),
-    id_document:     UploadFile = File(...),
-    log_book:        UploadFile = File(...),
+    customer_name: str   = Form(...),
+    claim_id:      str   = Form(...),
+    description:   str   = Form(""),
+    amount:        float = Form(0),
     db: Session = Depends(get_db),
     _=Depends(auth),
 ):
-    save_upload(police_abstract)
-    save_upload(id_document)
-    save_upload(log_book)
-
-    # Resolve customer from policy
-    policy = db.query(Policy).filter(Policy.policy_number == policy_number).first()
-    customer_id   = policy.customer_id   if policy else None
-    customer_name = policy.customer_name if policy else ""
-
     seq = db.query(Claim).count() + 1
-    claim_id = f"CLM-2024-{seq:05d}"
+    policy_number = f"POL-{datetime.utcnow().year}-{seq:05d}"
     now = datetime.utcnow()
 
     claim = Claim(
         claim_id=claim_id,
-        customer_id=customer_id,
+        customer_id=None,
         customer_name=customer_name,
         policy_number=policy_number,
         description=description,
@@ -452,9 +441,10 @@ async def submit_claim(
     db.commit()
 
     return {
-        "claim_id":     claim_id,
-        "submitted_at": now.isoformat() + "Z",
-        "status":       "pending",
+        "claim_id":      claim_id,
+        "policy_number": policy_number,
+        "submitted_at":  now.isoformat() + "Z",
+        "status":        "pending",
     }
 
 
