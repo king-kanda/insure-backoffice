@@ -304,41 +304,24 @@ def get_policy(policy_number: str, db: Session = Depends(get_db), _=Depends(auth
 
 @app.post("/api/covers/create")
 async def create_cover(
-    kra_pin:         str        = Form(...),
-    name:            str        = Form(""),
-    cover_type:      str        = Form("motor"),
-    log_book:        UploadFile = File(...),
-    id_card:         UploadFile = File(...),
-    driving_license: UploadFile = File(...),
+    customer_name: str   = Form(...),
+    policy_number: str   = Form(...),
+    cover_type:    str   = Form("motor"),
+    premium:       float = Form(5000.0),
     db: Session = Depends(get_db),
     _=Depends(auth),
 ):
-    save_upload(log_book)
-    save_upload(id_card)
-    save_upload(driving_license)
-
-    # Look up customer by KRA PIN; if not found and name provided, create one
-    customer = db.query(Customer).filter(Customer.kra_pin == kra_pin).first()
-    if not customer and name:
-        customer = Customer(kra_pin=kra_pin, name=name, id_number="")
-        db.add(customer)
-        db.flush()
-    customer_id   = customer.id   if customer else None
-    customer_name = customer.name if customer else (name or "")
-
-    seq = db.query(Policy).count() + 1
-    policy_number = f"POL-2024-{seq:05d}"
-    created   = datetime.utcnow()
-    expiry    = created + timedelta(days=365)
+    created = datetime.utcnow()
+    expiry  = created + timedelta(days=365)
 
     policy = Policy(
         policy_number=policy_number,
-        customer_id=customer_id,
+        customer_id=None,
         customer_name=customer_name,
-        cover_type=cover_type or "motor",
+        cover_type=cover_type,
         start_date=created.strftime("%Y-%m-%d"),
         expiry_date=expiry.strftime("%Y-%m-%d"),
-        premium=0.0,
+        premium=premium,
         status="active",
     )
     db.add(policy)
@@ -346,6 +329,8 @@ async def create_cover(
 
     return {
         "policy_number": policy_number,
+        "cover_type":    cover_type,
+        "premium":       premium,
         "created_at":    created.isoformat() + "Z",
         "expiry_date":   expiry.strftime("%Y-%m-%d"),
         "customer_name": customer_name,
