@@ -302,12 +302,15 @@ def get_policy(policy_number: str, db: Session = Depends(get_db), _=Depends(auth
         raise HTTPException(status_code=404, detail="Policy not found")
     return _policy_dict(p)
 
+class CreateCoverPayload(BaseModel):
+    customer_name: str
+    policy_number: str
+    cover_type:    str   = "motor"
+    premium:       float = 5000.0
+
 @app.post("/api/covers/create")
 async def create_cover(
-    customer_name: str   = Form(...),
-    policy_number: str   = Form(...),
-    cover_type:    str   = Form("motor"),
-    premium:       float = Form(5000.0),
+    payload: CreateCoverPayload,
     db: Session = Depends(get_db),
     _=Depends(auth),
 ):
@@ -315,25 +318,25 @@ async def create_cover(
     expiry  = created + timedelta(days=365)
 
     policy = Policy(
-        policy_number=policy_number,
+        policy_number=payload.policy_number,
         customer_id=None,
-        customer_name=customer_name,
-        cover_type=cover_type,
+        customer_name=payload.customer_name,
+        cover_type=payload.cover_type,
         start_date=created.strftime("%Y-%m-%d"),
         expiry_date=expiry.strftime("%Y-%m-%d"),
-        premium=premium,
+        premium=payload.premium,
         status="active",
     )
     db.add(policy)
     db.commit()
 
     return {
-        "policy_number": policy_number,
-        "cover_type":    cover_type,
-        "premium":       premium,
+        "policy_number": payload.policy_number,
+        "cover_type":    payload.cover_type,
+        "premium":       payload.premium,
         "created_at":    created.isoformat() + "Z",
         "expiry_date":   expiry.strftime("%Y-%m-%d"),
-        "customer_name": customer_name,
+        "customer_name": payload.customer_name,
     }
 
 
@@ -397,12 +400,15 @@ def update_claim_status(
     db.commit()
     return _claim_dict(claim)
 
+class SubmitClaimPayload(BaseModel):
+    customer_name: str
+    claim_id:      str
+    description:   str   = ""
+    amount:        float = 0
+
 @app.post("/api/claims/submit")
 async def submit_claim(
-    customer_name: str   = Form(...),
-    claim_id:      str   = Form(...),
-    description:   str   = Form(""),
-    amount:        float = Form(0),
+    payload: SubmitClaimPayload,
     db: Session = Depends(get_db),
     _=Depends(auth),
 ):
@@ -411,12 +417,12 @@ async def submit_claim(
     now = datetime.utcnow()
 
     claim = Claim(
-        claim_id=claim_id,
+        claim_id=payload.claim_id,
         customer_id=None,
-        customer_name=customer_name,
+        customer_name=payload.customer_name,
         policy_number=policy_number,
-        description=description,
-        amount=amount,
+        description=payload.description,
+        amount=payload.amount,
         status="pending",
         notes="Claim received, awaiting initial review",
         submitted_at=now,
@@ -426,7 +432,7 @@ async def submit_claim(
     db.commit()
 
     return {
-        "claim_id":      claim_id,
+        "claim_id":      payload.claim_id,
         "policy_number": policy_number,
         "submitted_at":  now.isoformat() + "Z",
         "status":        "pending",
