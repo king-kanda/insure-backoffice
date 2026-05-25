@@ -126,26 +126,26 @@ SEED_POLICIES = [
 ]
 
 SEED_CLAIMS = [
-    ("cl1",  "CLM-2024-00001", "c1",  "Amina Wanjiku Mwangi",    "POL-2024-00101", "Rear-end collision on Thika Road",          "paid",         85000,  "Payment disbursed to claimant",                "2024-10-01"),
-    ("cl2",  "CLM-2024-00002", "c2",  "Brian Otieno Odhiambo",   "POL-2024-00103", "Vehicle theft at Westgate Mall",            "approved",    120000,  "Claim approved, processing payment",           "2024-10-05"),
-    ("cl3",  "CLM-2024-00003", "c3",  "Catherine Njeri Kamau",   "POL-2024-00105", "Hospitalisation — appendectomy",            "under_review", 45000,  "Awaiting surveyor report",                     "2024-10-08"),
-    ("cl4",  "CLM-2024-00004", "c4",  "David Kipchoge Rotich",   "POL-2024-00107", "Windscreen & panel damage — hailstorm",     "pending",     200000,  "Claim received, awaiting initial review",      "2024-10-10"),
-    ("cl5",  "CLM-2024-00005", "c6",  "Francis Mwenda Mutua",    "POL-2024-00111", "Warehouse fire — electrical fault",         "rejected",    350000,  "Insufficient documentation provided",          "2024-10-12"),
-    ("cl6",  "CLM-2024-00006", "c8",  "Hassan Abdi Mohamed",     "POL-2024-00112", "Accident on Mombasa-Nairobi highway",       "under_review", 95000,  "Awaiting surveyor report",                     "2024-10-15"),
-    ("cl7",  "CLM-2024-00007", "c9",  "Irene Wambui Gichuru",    "POL-2024-00114", "Flood damage — parking basement",           "approved",     65000,  "Claim approved, processing payment",           "2024-10-18"),
-    ("cl8",  "CLM-2024-00008", "c13", "Martin Kariuki Mwangi",   "POL-2024-00116", "Hit and run — Northern Bypass",             "pending",     180000,  "Claim received, awaiting initial review",      "2024-10-20"),
-    ("cl9",  "CLM-2024-00009", "c14", "Nancy Wanjiru Njoroge",   "POL-2024-00101", "Minor fender bender — Ngong Road",          "paid",         30000,  "Payment disbursed to claimant",                "2024-10-22"),
-    ("cl10", "CLM-2024-00010", "c16", "Phyllis Cherotich Sang",  "POL-2024-00118", "Engine damage — flooding Nakuru",           "under_review", 75000,  "Awaiting surveyor report",                     "2024-10-24"),
-    ("cl11", "CLM-2024-00011", "c18", "Ruth Nyambura Githinji",  "POL-2024-00102", "Surgery — knee replacement",                "approved",    120000,  "Claim approved, processing payment",           "2024-10-25"),
-    ("cl12", "CLM-2024-00012", "c19", "Samuel Waweru Mungai",    "POL-2024-00119", "Carjacking — Kahawa Wendani",               "pending",     250000,  "Claim received, awaiting initial review",      "2024-10-27"),
-    ("cl13", "CLM-2024-00013", "c21", "Usman Farah Abdi",        "POL-2024-00120", "Shop fire — Garissa Town Centre",           "under_review",400000,  "Awaiting surveyor report",                     "2024-10-28"),
-    ("cl14", "CLM-2024-00014", "c3",  "Catherine Njeri Kamau",   "POL-2024-00104", "Side-swipe — Ngong Road roundabout",        "pending",      55000,  "Claim received, awaiting initial review",      "2024-10-29"),
-    ("cl15", "CLM-2024-00015", "c8",  "Hassan Abdi Mohamed",     "POL-2024-00113", "ICU admission — cardiac event",             "approved",     88000,  "Claim approved, processing payment",           "2024-10-30"),
-    ("cl16", "CLM-2024-00016", "c13", "Martin Kariuki Mwangi",   "POL-2024-00117", "Outpatient — diagnostic tests",             "paid",         42000,  "Payment disbursed to claimant",                "2024-10-31"),
-    ("cl17", "CLM-2024-00017", "c25", "Zachary Kipngetich Bett", "POL-2024-00110", "Total loss — drunk driver collision",        "pending",     160000,  "Claim received, awaiting initial review",      "2024-11-01"),
-    ("cl18", "CLM-2024-00018", "c23", "Walter Maina Kimani",     "POL-2024-00112", "Burst tyre — rollover Kiambu Road",         "under_review", 70000,  "Awaiting surveyor report",                     "2024-11-01"),
-    ("cl19", "CLM-2024-00019", "c11", "Kezia Moraa Nyamweya",    "POL-2024-00105", "Maternity — private hospital",              "pending",      95000,  "Claim received, awaiting initial review",      "2024-11-01"),
-    ("cl20", "CLM-2024-00020", "c6",  "Francis Mwenda Mutua",    "POL-2024-00110", "Alleged theft — insufficient evidence",     "rejected",    310000,  "Insufficient documentation provided",          "2024-11-01"),
+    ("cl1",  "CLM-2024-0000001", "c1",  "Amina Wanjiku Mwangi",    "POL-2024-00101", "Rear-end collision on Thika Road",          "paid",         85000,  "Payment disbursed to claimant",                "2024-10-01"),
+    ("cl2",  "CLM-2024-0000002", "c2",  "Brian Otieno Odhiambo",   "POL-2024-00103", "Vehicle theft at Westgate Mall",            "approved",    120000,  "Claim approved, processing payment",           "2024-10-05"),
+    ("cl3",  "CLM-2024-0000003", "c3",  "Catherine Njeri Kamau",   "POL-2024-00105", "Hospitalisation — appendectomy",            "under_review", 45000,  "Awaiting surveyor report",                     "2024-10-08"),
+    ("cl4",  "CLM-2024-0000004", "c4",  "David Kipchoge Rotich",   "POL-2024-00107", "Windscreen & panel damage — hailstorm",     "pending",     200000,  "Claim received, awaiting initial review",      "2024-10-10"),
+    ("cl5",  "CLM-2024-0000005", "c6",  "Francis Mwenda Mutua",    "POL-2024-00111", "Warehouse fire — electrical fault",         "rejected",    350000,  "Insufficient documentation provided",          "2024-10-12"),
+    ("cl6",  "CLM-2024-0000006", "c8",  "Hassan Abdi Mohamed",     "POL-2024-00112", "Accident on Mombasa-Nairobi highway",       "under_review", 95000,  "Awaiting surveyor report",                     "2024-10-15"),
+    ("cl7",  "CLM-2024-0000007", "c9",  "Irene Wambui Gichuru",    "POL-2024-00114", "Flood damage — parking basement",           "approved",     65000,  "Claim approved, processing payment",           "2024-10-18"),
+    ("cl8",  "CLM-2024-0000008", "c13", "Martin Kariuki Mwangi",   "POL-2024-00116", "Hit and run — Northern Bypass",             "pending",     180000,  "Claim received, awaiting initial review",      "2024-10-20"),
+    ("cl9",  "CLM-2024-0000009", "c14", "Nancy Wanjiru Njoroge",   "POL-2024-00101", "Minor fender bender — Ngong Road",          "paid",         30000,  "Payment disbursed to claimant",                "2024-10-22"),
+    ("cl10", "CLM-2024-0000010", "c16", "Phyllis Cherotich Sang",  "POL-2024-00118", "Engine damage — flooding Nakuru",           "under_review", 75000,  "Awaiting surveyor report",                     "2024-10-24"),
+    ("cl11", "CLM-2024-0000011", "c18", "Ruth Nyambura Githinji",  "POL-2024-00102", "Surgery — knee replacement",                "approved",    120000,  "Claim approved, processing payment",           "2024-10-25"),
+    ("cl12", "CLM-2024-0000012", "c19", "Samuel Waweru Mungai",    "POL-2024-00119", "Carjacking — Kahawa Wendani",               "pending",     250000,  "Claim received, awaiting initial review",      "2024-10-27"),
+    ("cl13", "CLM-2024-0000013", "c21", "Usman Farah Abdi",        "POL-2024-00120", "Shop fire — Garissa Town Centre",           "under_review",400000,  "Awaiting surveyor report",                     "2024-10-28"),
+    ("cl14", "CLM-2024-0000014", "c3",  "Catherine Njeri Kamau",   "POL-2024-00104", "Side-swipe — Ngong Road roundabout",        "pending",      55000,  "Claim received, awaiting initial review",      "2024-10-29"),
+    ("cl15", "CLM-2024-0000015", "c8",  "Hassan Abdi Mohamed",     "POL-2024-00113", "ICU admission — cardiac event",             "approved",     88000,  "Claim approved, processing payment",           "2024-10-30"),
+    ("cl16", "CLM-2024-0000016", "c13", "Martin Kariuki Mwangi",   "POL-2024-00117", "Outpatient — diagnostic tests",             "paid",         42000,  "Payment disbursed to claimant",                "2024-10-31"),
+    ("cl17", "CLM-2024-0000017", "c25", "Zachary Kipngetich Bett", "POL-2024-00110", "Total loss — drunk driver collision",        "pending",     160000,  "Claim received, awaiting initial review",      "2024-11-01"),
+    ("cl18", "CLM-2024-0000018", "c23", "Walter Maina Kimani",     "POL-2024-00112", "Burst tyre — rollover Kiambu Road",         "under_review", 70000,  "Awaiting surveyor report",                     "2024-11-01"),
+    ("cl19", "CLM-2024-0000019", "c11", "Kezia Moraa Nyamweya",    "POL-2024-00105", "Maternity — private hospital",              "pending",      95000,  "Claim received, awaiting initial review",      "2024-11-01"),
+    ("cl20", "CLM-2024-0000020", "c6",  "Francis Mwenda Mutua",    "POL-2024-00110", "Alleged theft — insufficient evidence",     "rejected",    310000,  "Insufficient documentation provided",          "2024-11-01"),
 ]
 
 
@@ -402,7 +402,6 @@ def update_claim_status(
 
 class SubmitClaimPayload(BaseModel):
     customer_name: str
-    claim_id:      str
     description:   str   = ""
     amount:        float = 0
 
@@ -413,11 +412,12 @@ async def submit_claim(
     _=Depends(auth),
 ):
     seq = db.query(Claim).count() + 1
-    policy_number = f"POL-{datetime.utcnow().year}-{seq:05d}"
     now = datetime.utcnow()
+    claim_id = f"CLM-{now.year}-{seq:07d}"
+    policy_number = f"POL-{now.year}-{seq:05d}"
 
     claim = Claim(
-        claim_id=payload.claim_id,
+        claim_id=claim_id,
         customer_id=None,
         customer_name=payload.customer_name,
         policy_number=policy_number,
@@ -432,7 +432,7 @@ async def submit_claim(
     db.commit()
 
     return {
-        "claim_id":      payload.claim_id,
+        "claim_id":      claim_id,
         "policy_number": policy_number,
         "submitted_at":  now.isoformat() + "Z",
         "status":        "pending",
