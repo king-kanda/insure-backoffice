@@ -1,5 +1,6 @@
 import os
 import uuid
+import base64
 import shutil
 from datetime import datetime, timedelta
 from typing import Optional
@@ -69,6 +70,15 @@ class Claim(Base):
     notes          = Column(String, default="Claim received, awaiting initial review")
     submitted_at   = Column(DateTime, default=datetime.utcnow)
     updated_at     = Column(DateTime, default=datetime.utcnow)
+
+class DummyFile(Base):
+    __tablename__ = "dummy_files"
+    id           = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    name         = Column(String, nullable=False)
+    filename     = Column(String, nullable=False)
+    content_type = Column(String, nullable=False)
+    data         = Column(String, nullable=False)   # base64-encoded file bytes
+    created_at   = Column(DateTime, default=datetime.utcnow)
 
 Base.metadata.create_all(bind=engine)
 
@@ -455,6 +465,118 @@ def get_stats(db: Session = Depends(get_db), _=Depends(auth)):
         "resolved_claims":  resolved_claims,
         "total_revenue":    revenue_sum,
         "total_customers":  total_customers,
+    }
+
+
+# ── DUMMY-FILE endpoints ──────────────────────────────────────────────────────
+
+class DummyFileUploadResponse(BaseModel):
+    """Returned after a successful file upload."""
+    id:           str
+    name:         str
+    filename:     str
+    content_type: str
+    created_at:   str
+
+class DummyFileDetailResponse(BaseModel):
+    """Full record including the base64 data URI ready for use in an <img> tag."""
+    id:           str
+    name:         str
+    filename:     str
+    content_type: str
+    data_uri:     str   # e.g. "data:image/jpeg;base64,/9j/4AAQ..."
+    created_at:   str
+
+
+def _dummy_file_summary(f: DummyFile) -> dict:
+    return {
+        "id":           f.id,
+        "name":         f.name,
+        "filename":     f.filename,
+        "content_type": f.content_type,
+        "created_at":   f.created_at.isoformat(),
+    }
+
+
+@app.post(
+    "/api/dummy-file/upload",
+    response_model=DummyFileUploadResponse,
+    tags=["DUMMY-FILE"],
+    summary="Upload a file (stored as Base64)",
+    description="""
+Upload a file via multipart/form-data. The file bytes are Base64-encoded and
+stored in the database. No disk storage is used after encoding.
+
+**Example curl:**
+```bash
+curl -X POST http://localhost:8000/api/dummy-file/upload \\
+  -H "x-api-key: ins_live_key_demo_2024" \\
+  -F "name=John" \\
+  -F "avatar=@/path/to/photo.jpg"
+```
+""",
+)
+async def upload_dummy_file(
+    name:   str        = Form(..., description="Display name associated with the file"),
+    avatar: UploadFile = File(..., description="The file to upload (image, PDF, etc.)"),
+    db:     Session    = Depends(get_db),
+    _=Depends(auth),
+):
+    raw          = await avatar.read()
+    b64          = base64.b64encode(raw).decode("utf-8")
+    content_type = avatar.content_type or "application/octet-stream"
+    filename     = avatar.filename or "file"
+
+    record = DummyFile(
+        name=name,
+        filename=filename,
+        content_type=content_type,
+        data=b64,
+    )
+    db.add(record)
+    db.commit()
+    db.refresh(record)
+
+    return _dummy_file_summary(record)
+
+
+@app.get(
+    "/api/dummy-file",
+    tags=["DUMMY-FILE"],
+    summary="List all uploaded files (metadata only)",
+    description="Returns metadata for every uploaded file. The `data_uri` field is **not** included here to keep the list lightweight — fetch `/api/dummy-file/{id}` for the full record.",
+)
+def list_dummy_files(db: Session = Depends(get_db), _=Depends(auth)):
+    files = db.query(DummyFile).order_by(DummyFile.created_at.desc()).all()
+    return [_dummy_file_summary(f) for f in files]
+
+
+@app.get(
+    "/api/dummy-file/{file_id}",
+    response_model=DummyFileDetailResponse,
+    tags=["DUMMY-FILE"],
+    summary="Retrieve a file with its Base64 data URI",
+    description="""
+Returns the full record including a `data_uri` string formatted as:
+
+```
+data:<content_type>;base64,<encoded_bytes>
+```
+
+You can use this directly in an HTML `<img>` tag or as the `src` of any media element:
+
+```html
+<img src="{{ data_uri }}" />
+```
+""",
+)
+def get_dummy_file(file_id: str, db: Session = Depends(get_db), _=Depends(auth)):
+    f = db.query(DummyFile).filter(DummyFile.id == file_id).first()
+    if not f:
+        raise HTTPException(status_code=404, detail="File not found")
+    return {
+        **_dummy_file_summary(f),
+        "data_uri": f"data:{f.content_type};base64,{f.data}",
     }
 
 
